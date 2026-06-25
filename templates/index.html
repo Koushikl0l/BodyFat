@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Composition Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <div class="bg-logos" aria-hidden="false">
+    <a
+      href="https://kinetiqintelligence.com"
+      class="bg-logo"
+      id="bg-logo"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Kinetiq Intelligence"
+    >
+      <span class="bg-logo-float">
+        <img src="/static/kinetiq-logo.png?v=3" alt="Kinetiq Intelligence" />
+      </span>
+    </a>
+  </div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">◉</span>
+        <span>Body Composition Analysis</span>
+      </div>
+      <span class="badge-ai">AI-Powered</span>
+    </header>
+
+    <main class="layout">
+      <!-- Left: Health Reference -->
+      <aside class="panel reference-panel">
+        <p class="eyebrow">HEALTH REFERENCE</p>
+        <h1>Body fat percentage guide</h1>
+        <p class="muted">Healthy ranges differ by sex. Use this chart to interpret your estimate.</p>
+
+        <div class="range-list">
+          <div class="range-item" data-key="essential">
+            <div class="range-head"><span>Essential fat</span><span class="range-pct">Men 2–5% · Women 10–13%</span></div>
+            <div class="bar"><span class="fill essential"></span></div>
+          </div>
+          <div class="range-item" data-key="athletes">
+            <div class="range-head"><span>Athletes</span><span class="range-pct">Men 6–13% · Women 14–20%</span></div>
+            <div class="bar"><span class="fill athletes"></span></div>
+          </div>
+          <div class="range-item" data-key="fitness">
+            <div class="range-head"><span>Fitness</span><span class="range-pct">Men 14–17% · Women 21–24%</span></div>
+            <div class="bar"><span class="fill fitness"></span></div>
+          </div>
+          <div class="range-item" data-key="acceptable">
+            <div class="range-head"><span>Acceptable</span><span class="range-pct">Men 18–24% · Women 25–31%</span></div>
+            <div class="bar"><span class="fill acceptable"></span></div>
+          </div>
+          <div class="range-item" data-key="obese">
+            <div class="range-head"><span>Obese</span><span class="range-pct">Men ≥25% · Women ≥32%</span></div>
+            <div class="bar"><span class="fill obese"></span></div>
+          </div>
+        </div>
+
+        <div class="means-box">
+          <h3>What This Means</h3>
+          <ul>
+            <li><span class="dot fitness"></span> Fitness range is associated with good cardiovascular health and physical performance.</li>
+            <li><span class="dot athletes"></span> Athletes range reflects very low body fat typical of competitive sports.</li>
+            <li><span class="dot acceptable"></span> Acceptable range is within normal limits for general health.</li>
+            <li><span class="dot obese"></span> Above acceptable ranges may increase health risks over time.</li>
+          </ul>
+        </div>
+
+        <div class="disclaimer">
+          <strong>⚠ Medical Disclaimer</strong>
+          <p>
+            This tool provides <strong>estimated</strong> body fat percentages for general wellness
+            information only. It is <strong>not</strong> a medical device, clinical test, or substitute
+            for professional healthcare advice, diagnosis, or treatment.
+          </p>
+          <p class="disclaimer-detail">
+            <strong>About this model:</strong> Estimates are produced by a vision AI trained on
+            front/side body silhouettes plus height, weight, and biological sex. Training targets use
+            the US Navy body-composition formula (anthropometric), not DEXA, hydrostatic weighing,
+            or other clinical reference methods.
+          </p>
+          <p class="disclaimer-detail">
+            <strong>Accuracy (held-out test set):</strong> On 274 photos from 102 subjects never seen
+            during training (subject-level split, no leakage), the model’s mean absolute error vs.
+            Navy-formula reference was <strong>1.64%</strong> body fat. That is the average — individual
+            results may differ by several percentage points, especially with real-world photos,
+            segmentation quality, pose, or clothing.
+          </p>
+          <p class="disclaimer-detail">
+            Do not use these results to diagnose disease, change medication, or replace advice from a
+            qualified physician, dietitian, or certified body-composition specialist.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Right: Input + Results -->
+      <section class="panel main-panel">
+        <p class="eyebrow">BODY COMPOSITION ANALYSIS</p>
+        <h2>Estimate your body fat percentage</h2>
+        <p class="muted">Upload front and side photos, enter your measurements, and get an instant AI-powered estimate.</p>
+
+        <form id="analyze-form" class="form">
+          <div class="steps-wrap">
+            <div class="step step-photos">
+              <div class="step-label"><span class="step-num">1</span> Step 1 — Photos</div>
+              <div class="photo-grid">
+                <label class="upload-card has-example" id="front-card">
+                  <input type="file" id="front-photo" name="front_photo" accept="image/*" hidden />
+                  <img class="upload-example" src="/static/examples/front.jpg" alt="Example front pose" />
+                  <img class="upload-preview" id="front-preview" alt="" hidden />
+                  <div class="upload-overlay">
+                    <span class="upload-example-badge">Example</span>
+                    <strong>Frontal photo</strong>
+                    <span class="upload-hint">Face the camera directly · full body</span>
+                    <span class="upload-btn">Upload your photo</span>
+                  </div>
+                </label>
+                <label class="upload-card has-example" id="side-card">
+                  <input type="file" id="side-photo" name="side_photo" accept="image/*" hidden />
+                  <img class="upload-example" src="/static/examples/side.jpg" alt="Example side pose" />
+                  <img class="upload-preview" id="side-preview" alt="" hidden />
+                  <div class="upload-overlay">
+                    <span class="upload-example-badge">Example</span>
+                    <strong>Side photo</strong>
+                    <span class="upload-hint">Turn 90° to your left · full body</span>
+                    <span class="upload-btn">Upload your photo</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-block">
+            <div class="step step-measurements">
+              <div class="step-label"><span class="step-num">2</span> Step 2 — Measurements</div>
+              <div class="measurements-grid">
+                <div class="measure-col">
+                  <label class="field-label">⚖ WEIGHT</label>
+                  <div class="input-row">
+                    <input type="number" id="weight" name="weight_kg" placeholder="Enter your weight" min="20" max="300" step="0.1" required />
+                    <span class="unit">kg</span>
+                  </div>
+                </div>
+
+                <div class="measure-col">
+                  <label class="field-label">↕ HEIGHT</label>
+                  <div class="height-row">
+                    <div class="input-row">
+                      <input type="number" id="height-feet" name="height_feet" placeholder="Feet" min="3" max="8" step="1" required />
+                      <span class="unit">ft</span>
+                    </div>
+                    <div class="input-row">
+                      <input type="number" id="height-inches" name="height_inches" placeholder="Inches" min="0" max="11" step="1" required />
+                      <span class="unit">in</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="measure-col">
+                  <label class="field-label">⚧ BIOLOGICAL SEX</label>
+                  <div class="sex-toggle">
+                    <button type="button" class="sex-btn active" data-gender="male">♂ Male</button>
+                    <button type="button" class="sex-btn" data-gender="female">♀ Female</button>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="gender" name="gender" value="male" />
+            </div>
+
+            <button type="submit" class="analyze-btn" id="analyze-btn">
+              <span class="spark">✦</span> Analyze body composition
+            </button>
+            <p id="error-msg" class="error-msg" hidden></p>
+
+            <div id="results" class="results">
+              <div class="result-card highlight">
+                <span class="result-label">Body fat %</span>
+                <div class="result-inline">
+                  <span class="result-value blue" id="res-bf">—</span>
+                  <span class="result-badge" id="res-badge" hidden>—</span>
+                </div>
+              </div>
+              <div class="result-card">
+                <span class="result-label">Lean mass</span>
+                <span class="result-value" id="res-lean">—</span>
+              </div>
+              <div class="result-card">
+                <span class="result-label">Fat mass</span>
+                <span class="result-value" id="res-fat">—</span>
+              </div>
+              <div class="result-card">
+                <span class="result-label">BMI (est.)</span>
+                <span class="result-value" id="res-bmi">—</span>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="model-info">
+          <h3>How this model works</h3>
+          <p>
+            Our AI reads your <strong>front and side body shape</strong> from photos, segments a
+            silhouette, and combines it with your height, weight, and biological sex to estimate
+            body fat percentage, lean mass, fat mass, and BMI.
+          </p>
+          <p>
+            The model is a lightweight dual-view vision network (EfficientNet) trained on thousands
+            of BodyM silhouettes with knowledge distillation from a larger vision-language teacher.
+            Training targets follow the <strong>US Navy anthropometric formula</strong> — a practical
+            field estimate, not DEXA or clinical lab measurement.
+          </p>
+          <p class="model-info-detail">
+            On a held-out test set (274 photos, 102 subjects never seen during training), average
+            error vs. the Navy reference was <strong>1.64% body fat</strong>. Real-world photos may
+            vary more depending on pose, lighting, and segmentation quality. Results are for general
+            wellness information only — not medical diagnosis.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
